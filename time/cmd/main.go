@@ -3,23 +3,27 @@ package main
 import (
 	"fmt"
 	"i3blocks/time/cmd/pango"
+	"strings"
 	"time"
 )
 
-
-
-
-
 func main() {
-  time:= time.Now().Format(time.Kitchen)
-  
-  bg := "#769ff0"
-  fg := "#1f1f1f"
+	time := strings.ToLower(time.Now().Format(time.Kitchen))
 
-  output := pango.Span(time, pango.Args{
-    Bg: bg,
-    Fg: fg,
-  })
+	light := "#769ff0"
+	dark := "#1f1f1f"
 
-  fmt.Println(output)
+	edge := pango.Span("", pango.Args{
+		Bg:   dark,
+		Fg:   light,
+		Size: "15pt",
+	})
+
+	text := pango.Span(time, pango.Args{
+		Bg:   light,
+		Fg:   dark,
+		Size: "14pt",
+	})
+
+	fmt.Println(edge + text)
 }
