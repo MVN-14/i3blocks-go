@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 
 	pango "github.com/MVN-14/panggo"
 )
@@ -11,6 +12,8 @@ import (
 func main() {
 	var foreground string
 	var background string
+
+	const batteryPath = "/sys/class/power_supply/BAT0/"
 
 	index, err := strconv.Atoi(os.Getenv("idx"))
 	if err != nil {
@@ -26,12 +29,23 @@ func main() {
 		foreground = os.Getenv("background")
 	}
 
-	percent, err := os.ReadFile("/sys/class/power_supply/BAT0/capacity")
-	if err != nil || len(percent) <= 0 {
+	bytes, err := os.ReadFile(batteryPath + "capacity")
+	if err != nil || len(bytes) <= 0 {
 		fmt.Println("Error reading BAT0 capacity")
 		return
 	}
 
-	percentStr := fmt.Sprintf("%c %s%% ", '󰁹', string(percent[:len(percent)-1]))
+	percent := string(bytes[:len(bytes)-1])
+	symbol := '󰁹'
+
+	bytes, err = os.ReadFile(batteryPath + "status")
+	if err != nil {
+		fmt.Println("Error reading BAT0 status")
+		return
+	}
+	if strings.Trim(string(bytes), " \n\r\t") == "Charging" {
+		symbol = '󰂄'
+	}
+	percentStr := fmt.Sprintf("%c %s%% ", symbol, percent)
 	fmt.Println(pango.Powerline("", percentStr, foreground, background, true))
 }
