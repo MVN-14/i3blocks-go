@@ -38,14 +38,21 @@ func main() {
 		return
 	}
 
-	//status := strings.Split(string(output), "\n")[0]
-
 	cmd = exec.Command("playerctl", "--player=spotify", "metadata", "artist")
 	output, err = cmd.Output()
 	if err != nil {
 		fmt.Println(err)
 	}
 	artist := strings.Split(string(output), "\n")[0]
+
+	if len(artist) <= 0 {
+		cmd = exec.Command("playerctl", "--player=spotify", "metadata", "album")
+		output, err = cmd.Output()
+		if err != nil {
+			fmt.Println(err)
+		}
+		artist = strings.Split(string(output), "\n")[0]
+	}
 
 	cmd = exec.Command("playerctl", "--player=spotify", "metadata", "title")
 	output, err = cmd.Output()
