@@ -15,6 +15,11 @@ func main() {
 	var foreground string
 	var background string
 
+	button := os.Getenv(("button"))
+	if button == "3" {
+		exec.Command("pavucontrol").Run()
+	}
+
 	index, err := strconv.Atoi(os.Getenv("idx"))
 	if err != nil {
 		fmt.Println("NO INDEX")
@@ -51,9 +56,7 @@ func main() {
 	mutedStatus := text[openBraceIdx+1 : closeBraceIdx]
 	muted := mutedStatus != "on"
 
-	button := os.Getenv(("button"))
-	switch button {
-	case "1":
+	if button == "1" {
 		if muted {
 			err = exec.Command("amixer", "set", "Master", "unmute").Run()
 		} else {
@@ -63,9 +66,6 @@ func main() {
 		if err != nil {
 			fmt.Println(err)
 		}
-
-	case "3":
-		exec.Command("pavucontrol").Run()
 	}
 
 	if len(text) <= 0 {
