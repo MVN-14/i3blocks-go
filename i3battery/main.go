@@ -47,5 +47,5 @@ func main() {
 		symbol = '󰂄'
 	}
 	percentStr := fmt.Sprintf("%c %s%% ", symbol, percent)
-	fmt.Println(pango.Powerline("", percentStr, foreground, background, true))
+	fmt.Println(pango.Powerline("", percentStr, foreground, background, false))
 }
