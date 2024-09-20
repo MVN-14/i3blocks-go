@@ -34,7 +34,7 @@ func main() {
 	cmd := exec.Command("playerctl", "--player=spotify", "status")
 	output, err := cmd.Output()
 	if err != nil {
-		fmt.Println("Error reading status from playerctl: ", err)
+		//fmt.Println("Error reading status from playerctl: ", err)
 		return
 	}
 
