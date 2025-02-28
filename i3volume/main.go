@@ -82,7 +82,7 @@ func main() {
 		icon = " "
 	}
 
-	text = icon + text[openBraceIdx+1:closeBraceIdx]
+	text = icon + text[openBraceIdx+1:closeBraceIdx] + " "
 
 	fmt.Println(pango.Powerline("", text, foreground, background, false))
 }

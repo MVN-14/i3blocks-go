@@ -27,7 +27,7 @@ func main() {
 		foreground = os.Getenv("background")
 	}
 
-	dateString := time.Now().Format(time.DateOnly)
+	dateString := time.Now().Format(time.DateOnly) + " "
 
 	fmt.Println(pango.Powerline("", dateString, foreground, background, false))
 }

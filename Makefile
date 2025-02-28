@@ -1,3 +1,6 @@
+b-i3nord:
+	go build -C i3nord -o i3nord main.go
+
 b-i3spotify:
 	go build -C i3spotify -o i3spotify main.go
 
@@ -14,4 +17,4 @@ b-i3volume:
 	go build -C i3volume -o i3volume  main.go
 
 b-all:
-	make b-i3date && make b-i3time && make b-i3battery && make b-i3volume	&& make b-i3spotify
+	make b-i3date && make b-i3time && make b-i3battery && make b-i3volume	&& make b-i3spotify && make b-i3nord

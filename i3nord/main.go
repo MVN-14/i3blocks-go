@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/MVN-14/panggo"
 	"os"
+	"os/exec"
 	"strconv"
 	"strings"
-	"time"
+
+	pango "github.com/MVN-14/panggo"
 )
 
 func main() {
@@ -27,7 +28,19 @@ func main() {
 		foreground = os.Getenv("background")
 	}
 
-	time := strings.ToLower(time.Now().Format(time.Kitchen)) + " "
+	cmd := exec.Command("nordvpn", "status")
+	output, err := cmd.Output()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 
-	fmt.Println(pango.Powerline("", time, foreground, background, false))
+	var symbol string
+	if strings.Contains(string(output), "Connected") {
+		symbol = "󰒘 "
+	} else {
+		symbol = " "
+	}
+
+	fmt.Println(pango.Powerline("", symbol, foreground, background, false))
 }
